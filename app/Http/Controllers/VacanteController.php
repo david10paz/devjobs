@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vacante;
 use Illuminate\Http\Request;
 
 class VacanteController extends Controller
@@ -13,6 +14,12 @@ class VacanteController extends Controller
      */
     public function index()
     {
+        //Le decimos que solo vea el modelo de Vacantes quien tenga de rol el numero 2 (Recruiters) que son los que
+        //pueden crear, editar, borrar... las vacantes
+        //MIRAR EN VacantePolicy DENTRO DE Policies: Policies/VacantePolicy
+
+        $this->authorize('viewAny', Vacante::class);
+
         return view('vacantes.index');
     }
 
@@ -23,6 +30,13 @@ class VacanteController extends Controller
      */
     public function create()
     {
+
+        //Le decimos que solo puede crear el modelo de Vacantes quien tenga de rol el numero 2 (Recruiters) que son los que
+        //pueden crear, editar, borrar... las vacantes
+        //MIRAR EN VacantePolicy DENTRO DE Policies: Policies/VacantePolicy
+
+        $this->authorize('create', Vacante::class);
+
         return view('vacantes.create');
     }
 
@@ -43,9 +57,9 @@ class VacanteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Vacante $vacante)
     {
-        //
+        return view('vacantes.show', ['vacante' => $vacante]);
     }
 
     /**
@@ -54,31 +68,12 @@ class VacanteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Vacante $vacante)
     {
-        //
-    }
+        //Le dejamos ver la pagina de editar si el usuario registrado es el mismo que esta registrado como creador de la vacante
+        //Mirar la función update dentro de Policies/VacantePolicy.php
+        $this->authorize('update', $vacante);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('vacantes.edit', ['vacante' => $vacante]);
     }
 }
