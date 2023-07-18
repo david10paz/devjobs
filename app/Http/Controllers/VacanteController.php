@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vacante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VacanteController extends Controller
 {
@@ -59,7 +60,15 @@ class VacanteController extends Controller
      */
     public function show(Vacante $vacante)
     {
-        return view('vacantes.show', ['vacante' => $vacante]);
+
+        $candidatoYaPresentado = false;
+        $candidatoYaPresentadoQuery = DB::table('candidatos')->where('user_id', auth()->user()->id)->where('vacante_id', $vacante->id)->first();
+        
+        if($candidatoYaPresentadoQuery){
+            $candidatoYaPresentado = true;
+        }
+
+        return view('vacantes.show', ['vacante' => $vacante, 'candidatoPresentado' => $candidatoYaPresentado]);
     }
 
     /**

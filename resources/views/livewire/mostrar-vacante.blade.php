@@ -39,4 +39,17 @@
         </div>
     @endguest
 
+    @auth
+        {{-- Si son developers pueden postularse a una vacante --}}
+        @if (auth()->user()->rol == 1)
+            @if ($candidatoPresentado == false)
+                <livewire:postular-vacante :vacante="$vacante" />
+            @else
+                <div class="border border-green-500 bg-green-100 text-green-800 font-bold uppercase p-2 mt-2 text-sm">
+                    Usted ya está presentado a esta candidatura de vacante
+                </div>
+            @endif
+        @endif
+    @endauth
+
 </div>

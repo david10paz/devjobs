@@ -23,3 +23,19 @@ Luego hemos escrito php artisan make:livewire crear-vacante y nos crea 2 archivo
 Luego hemos escrito php artisan make:livewire mostrar-vacantes y nos crea 2 archivos uno para la vista mostrar-vacantes.blade.php y otro como de controlador MostrarVacantes.php
 Consultar en estos 2 archivos lo que se ha hecho y como se pinta en la vista de /vacantes/index.blade.php y /vacantes/create.blade.php
 TODO ESTA ALLÍ EN ESOS ARCHIVOS, REVISAR SU FUNCIONAMIENTO PARA ENTENDERLO
+
+
+Para postularse a una vacante hemos creado al igual que anteriormente tambn hacía un componente de livewire. He añadido aparte una condición para que si un developer ya ha enviando una
+solicitud a una vacante que ya no pueda enviar más. Revisar el proceso desde VacanteController hasta llevar a la vista de livewire de postular-vacante dentro de mostrar-vacante
+
+Hemos creado el poder enviar notificaciones al recruiter mediante notifications, una funcion ya incorporada en laravel
+Primero creamos la tabla notification propia de laravel: php artisan make:migration notifications:table, y le tiramos el migrate
+Luego creamos la Notification -> NuevoCandidato.php (php artisan make:notification NuevoCandidato), y luego la llamamos a la hora de cuando un candidato se postula a la vacante (PostularVacante.php)
+También heos creado un controlador NotificacionController (php artisan make:controller NotificacionController --invoke) con la clase invoke para pintar estas notificaciones en la vista
+
+Hemos creado nuestro primer middleware! Se llama RolUsuario (php artisan make:middleware RolUsuario), con este middleware lo que le decimos es que en las rutas en que le establezcamos 
+si no no es un recruiter (rol == 1 -> Dev) que le lleve a la home. 
+Para establecerlos lo hemos añadido en el Kernel.php.
+Y por último lo hemos ido añadiendo a las rutas cuales no tendría que ir un developer (rol == 1). Como son la ruta de las notificaciones y del dashboard.
+
+
