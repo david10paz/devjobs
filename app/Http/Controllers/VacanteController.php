@@ -62,10 +62,13 @@ class VacanteController extends Controller
     {
 
         $candidatoYaPresentado = false;
-        $candidatoYaPresentadoQuery = DB::table('candidatos')->where('user_id', auth()->user()->id)->where('vacante_id', $vacante->id)->first();
-        
-        if($candidatoYaPresentadoQuery){
-            $candidatoYaPresentado = true;
+
+        if (auth()->user()) {
+            $candidatoYaPresentadoQuery = DB::table('candidatos')->where('user_id', auth()->user()->id)->where('vacante_id', $vacante->id)->first();
+
+            if ($candidatoYaPresentadoQuery) {
+                $candidatoYaPresentado = true;
+            }
         }
 
         return view('vacantes.show', ['vacante' => $vacante, 'candidatoPresentado' => $candidatoYaPresentado]);

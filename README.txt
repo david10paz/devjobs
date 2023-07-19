@@ -39,3 +39,5 @@ Para establecerlos lo hemos añadido en el Kernel.php.
 Y por último lo hemos ido añadiendo a las rutas cuales no tendría que ir un developer (rol == 1). Como son la ruta de las notificaciones y del dashboard.
 
 
+Finalizamos el proyecto listando los candidatos solicitantes de una vacante, y creamos la página principal del proyecto con un filtrador llamando mediante un post a una funcion de su Livewire que
+a su vez hace un emit a una funcion de Livewire/HomeVacantes en la que le establecemos los terminos emitidos y hacemos una busqueda en el render por estos datos mandados si es que fueran mandados.
