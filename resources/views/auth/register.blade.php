@@ -28,6 +28,14 @@
                     required />
             </div>
 
+            <!-- Teléfono -->
+            <div class="mt-4">
+                <x-label for="phone" :value="__('Teléfono')" />
+
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone"
+                    required />
+            </div>
+
             <!-- Rol -->
             <div class="mt-4">
                 <x-label for="rol" :value="__('¿Que tipo de cuenta deseas?')" />

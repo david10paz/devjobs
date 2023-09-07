@@ -9,6 +9,7 @@ class MostrarVacante extends Component
 
     public $vacante;
     public $candidatoPresentado;
+    public $numeroCandidatosVacante;
 
     public function render()
     {

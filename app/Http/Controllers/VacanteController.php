@@ -71,7 +71,9 @@ class VacanteController extends Controller
             }
         }
 
-        return view('vacantes.show', ['vacante' => $vacante, 'candidatoPresentado' => $candidatoYaPresentado]);
+        $numeroCandidatosVacante = DB::table('candidatos')->where('vacante_id', $vacante->id)->count();
+
+        return view('vacantes.show', ['vacante' => $vacante, 'candidatoPresentado' => $candidatoYaPresentado, 'numeroCandidatosVacante' => $numeroCandidatosVacante]);
     }
 
     /**

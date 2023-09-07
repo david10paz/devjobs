@@ -42,6 +42,7 @@
     @auth
         {{-- Si son developers pueden postularse a una vacante --}}
         @if (auth()->user()->rol == 1)
+            <p class="text-lg">Numero de candidatos presentados a esta vacante: <span class="font-bold">{{$numeroCandidatosVacante}}</span></p>
             @if ($candidatoPresentado == false)
                 <livewire:postular-vacante :vacante="$vacante" />
             @else
