@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Salario;
 use Livewire\Component;
 use App\Models\Categoria;
+use App\Models\Ciudades;
+use App\Models\Paises;
 use App\Models\Vacante;
 use Livewire\WithFileUploads;
 
@@ -14,9 +16,14 @@ class CrearVacante extends Component
     public $salario;
     public $categoria;
     public $empresa;
+    public $pais;
+    public $ciudad;
     public $ultimo_dia;
     public $descripcion;
     public $imagen;
+
+    public $paises;
+    public $ciudades;
 
     use WithFileUploads;
 
@@ -25,10 +32,17 @@ class CrearVacante extends Component
         'salario' => 'required',
         'categoria' => 'required',
         'empresa' => 'required',
+        'pais' => 'required',
+        'ciudad' => 'required',
         'ultimo_dia' => 'required',
         'descripcion' => 'required',
         'imagen' => 'required|image|max:1024',
     ];
+
+    public function mount(){
+        $this->paises = Paises::all();
+        $this->ciudades = collect();
+    }
 
     public function render()
     {
@@ -38,6 +52,12 @@ class CrearVacante extends Component
         $categorias = Categoria::all();
 
         return view('livewire.crear-vacante', ['salarios' => $salarios, 'categorias' => $categorias]);
+    }
+
+    public function updatedPais($value){
+        $this->ciudades = Ciudades::where('paises_id', $value)->get();
+        $this->ciudad = $this->ciudades->first()->id ?? null;
+        //dd($ciudades->count());
     }
 
     public function crearVacante()
@@ -56,6 +76,7 @@ class CrearVacante extends Component
             'salario_id' => $datos['salario'],
             'categoria_id' => $datos['categoria'],
             'empresa' => $datos['empresa'],
+            'ciudad_id' => $datos['ciudad'],
             'ultimo_dia' => $datos['ultimo_dia'],
             'descripcion' => $datos['descripcion'],
             'imagen' => $nombreImagen,

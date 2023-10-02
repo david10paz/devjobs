@@ -42,6 +42,36 @@
         @enderror
     </div>
     <div>
+        <div class="mb-2">
+            <x-label for="pais" :value="__('País')" />
+            <select id="pais" wire:model="pais"
+                class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="">Selecciona un pais</option>
+                @foreach ($paises as $pais)
+                    <option value="{{ $pais->id }}">{{ $pais->name }}</option>
+                @endforeach
+            </select>
+            @error('pais')
+                <livewire:mostrar-alerta :message="$message" />
+            @enderror
+        </div>
+        <div>
+            <x-label for="ciudad" :value="__('Ciudad')" />
+            <select id="ciudad" wire:model="ciudad"
+                class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                @if ($ciudades->count() == 0)
+                    <option value="">Tienes que seleccionar antes un país</option>
+                @endif
+                @foreach ($ciudades as $ciudad)
+                    <option value="{{ $ciudad->id }}">{{ $ciudad->name }}</option>
+                @endforeach
+            </select>
+            @error('ciudad')
+                <livewire:mostrar-alerta :message="$message" />
+            @enderror
+        </div>
+    </div>
+    <div>
         <x-label for="ultimo_dia" :value="__('Última día para solicitar')" />
         <x-input id="ultimo_dia" class="block mt-1 w-full" type="date" wire:model="ultimo_dia" :value="old('ultimo_dia')" />
         @error('ultimo_dia')

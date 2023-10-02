@@ -17,6 +17,18 @@
             <p class="font-bold text-sm uppercase text-gray-800 my-3">Salario:
                 <span class="normal-case font-normal">{{ $vacante->salario->salario }}</span>
             </p>
+            @php
+                $pais = DB::table('paises')
+                    ->where('id', $vacante->ciudad->paises_id)
+                    ->first();
+            @endphp
+            <p class="font-bold text-sm uppercase text-gray-800 my-3">Pais:
+                <span class="normal-case font-normal">{{ $pais->name }}</span>
+            </p>
+            <p class="font-bold text-sm uppercase text-gray-800 my-3">Ciudad:
+                <span class="normal-case font-normal">{{ $vacante->ciudad->name }}</span>
+            </p>
+
         </div>
     </div>
 
@@ -42,7 +54,8 @@
     @auth
         {{-- Si son developers pueden postularse a una vacante --}}
         @if (auth()->user()->rol == 1)
-            <p class="text-lg">Numero de candidatos presentados a esta vacante: <span class="font-bold">{{$numeroCandidatosVacante}}</span></p>
+            <p class="text-lg">Numero de candidatos presentados a esta vacante: <span
+                    class="font-bold">{{ $numeroCandidatosVacante }}</span></p>
             @if ($candidatoPresentado == false)
                 <livewire:postular-vacante :vacante="$vacante" />
             @else

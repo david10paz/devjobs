@@ -18,6 +18,7 @@ class Vacante extends Model
         'descripcion',
         'imagen',
         'user_id',
+        'ciudad_id'
     ];
 
     public function categoria()
@@ -28,6 +29,11 @@ class Vacante extends Model
     public function salario()
     {
         return $this->belongsTo(Salario::class);
+    }
+
+    public function ciudad()
+    {
+        return $this->belongsTo(Ciudades::class);
     }
 
     public function candidatos()

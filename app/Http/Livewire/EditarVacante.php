@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Paises;
 use App\Models\Salario;
+use App\Models\Vacante;
 use Livewire\Component;
 use App\Models\Categoria;
-use App\Models\Vacante;
+use App\Models\Ciudades;
 use Livewire\WithFileUploads;
 
 class EditarVacante extends Component
@@ -17,10 +19,15 @@ class EditarVacante extends Component
     public $salario;
     public $categoria;
     public $empresa;
+    public $ciudad;
+    public $pais;
     public $ultimo_dia;
     public $descripcion;
     public $imagen;
     public $imagenNueva;
+
+    public $paises;
+    public $ciudades;
 
     use WithFileUploads;
 
@@ -30,6 +37,8 @@ class EditarVacante extends Component
         'salario' => 'required',
         'categoria' => 'required',
         'empresa' => 'required',
+        'pais' => 'required',
+        'ciudad' => 'required',
         'ultimo_dia' => 'required',
         'descripcion' => 'required',
         'imagenNueva' => 'nullable|image|max:1024',
@@ -52,9 +61,23 @@ class EditarVacante extends Component
         $this->salario = $vacante->salario_id;
         $this->categoria = $vacante->categoria_id;
         $this->empresa = $vacante->empresa;
+        $this->ciudad = $vacante->ciudad_id;
         $this->ultimo_dia = $vacante->ultimo_dia;
         $this->descripcion = $vacante->descripcion;
         $this->imagen = $vacante->imagen;
+
+        $ciudadInfo = Ciudades::where('id', $vacante->ciudad_id)->first();
+        $paisInfo = Paises::where('id', $ciudadInfo->paises_id)->first();
+        $this->pais = $paisInfo->id;
+
+        $this->paises = Paises::all();
+        $this->ciudades = Ciudades::where('paises_id', $paisInfo->id)->get();
+    }
+
+    public function updatedPais($value){
+        $this->ciudades = Ciudades::where('paises_id', $value)->get();
+        $this->ciudad = $this->ciudades->first()->id ?? null;
+        //dd($ciudades->count());
     }
 
     public function editarVacante(){
@@ -70,11 +93,14 @@ class EditarVacante extends Component
         //Encontrar la vacante a editar
         $vacante = Vacante::find($this->vacante_id);
 
+        //dd($datos);
+
         //Asignar los valores
         $vacante->titulo = $datos['titulo'];
         $vacante->salario_id = $datos['salario'];
         $vacante->categoria_id = $datos['categoria'];
         $vacante->empresa = $datos['empresa'];
+        $vacante->ciudad_id = $datos['ciudad'];
         $vacante->ultimo_dia = $datos['ultimo_dia'];
         $vacante->descripcion = $datos['descripcion'];        
         $vacante->imagen = $nombreImagen ?? $vacante->imagen;        

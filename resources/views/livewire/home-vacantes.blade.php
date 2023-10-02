@@ -11,11 +11,21 @@
                     @foreach ($vacantes as $vacante)
                         <div class="md:flex md:justify-between md:items-center py-5">
                             <div>
-                                <a class="text-3xl font-extrabold text-gray-600" href="{{ route('vacantes.show', $vacante->id) }}">{{$vacante->titulo}}</a>
-                                <p class="text-base text-gray-600 mb-2">{{$vacante->empresa}}</p>
-                                <p class="text-xs font-bold text-gray-600 mb-2">{{$vacante->categoria->categoria}}</p>
-                                <p class="text-xs font-bold text-gray-600 mb-2">{{$vacante->salario->salario}}</p>
-                                <p class="text-base text-gray-600">Último día para postularse: <span class="font-bold">{{$vacante->ultimo_dia}}</span></p>
+                                <a class="text-3xl font-extrabold text-gray-600"
+                                    href="{{ route('vacantes.show', $vacante->id) }}">{{ $vacante->titulo }}</a>
+                                <p class="text-base text-gray-600 mb-2">{{ $vacante->empresa }}</p>
+                                <p class="text-xs font-bold text-gray-600 mb-2">{{ $vacante->categoria->categoria }}</p>
+                                @php
+                                    $pais = DB::table('paises')
+                                        ->where('id', $vacante->ciudad->paises_id)
+                                        ->first();
+                                @endphp
+
+                                <p class="text-xs font-bold  text-blue-800 mb-2">{{ $pais->name }}
+                                    ({{ $vacante->ciudad->name }})</p>
+                                <p class="text-xs font-bold text-gray-600 mb-2">{{ $vacante->salario->salario }}</p>
+                                <p class="text-base text-gray-600">Último día para postularse: <span
+                                        class="font-bold">{{ $vacante->ultimo_dia }}</span></p>
                             </div>
                             <div>
                                 <a class="bg-teal-500 p-3 text-sm font-bold text-white rounded-lg uppercase block text-center mt-5 md:mt-0"
