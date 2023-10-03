@@ -23,7 +23,7 @@
                                         </p>
                                     </div>
                                     <div class="mt-5 lg:mt-0">
-                                        <a href="{{ route('candidatos.index', $notificacion->data['id_vacante']) }}"
+                                        <a href="{{ route('candidatos.index', ['vacante' => $notificacion->data['id_vacante'], 'notificacion' => $notificacion->id] ) }}"
                                             class="bg-teal-500 p-3 text-sm font-bold text-white rounded-lg uppercase">Ver
                                             candidato</a>
                                     </div>

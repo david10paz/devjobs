@@ -30,7 +30,7 @@
                                                 class="inline-flex items-center shadow-sm px-2 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">Ver
                                                 CV</a>
                                         </div>
-                                        <div>
+                                        <div class="mr-5">
                                             <a href="tel:{{ $candidato->user->phone }}" target="_blank"
                                                 class="inline-flex items-center shadow-sm px-2 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-white bg-green-500 hover:bg-green-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -42,6 +42,24 @@
 
                                                 <span class="ml-2 font-bold">Llamar a candidato</span>
                                             </a>
+                                        </div>
+                                        <div>
+                                            <form
+                                                action="{{ route('candidatos.rechazar', ['vacante' => $vacante->id, 'user' => $candidato->user->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="inline-flex items-center shadow-sm px-2 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-white bg-red-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                    <span class="ml-2 font-bold">Rechazar</span>
+
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 @endforeach

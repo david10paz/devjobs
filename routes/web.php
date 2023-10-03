@@ -23,7 +23,9 @@ Route::get('/dashboard', [VacanteController::class, 'index'])->middleware(['auth
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
 Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
-Route::get('/candidatos/{vacante}', [CandidatosController::class, 'index'])->name('candidatos.index');
+Route::get('/candidatos/{vacante}/{notificacion?}', [CandidatosController::class, 'index'])->name('candidatos.index');
+Route::post('/candidatos/{vacante}/{user}', [CandidatosController::class, 'rechazar'])->name('candidatos.rechazar');
+Route::get('/mis-candidaturas/{user}', [CandidatosController::class, 'show'])->middleware(['auth', 'verified'])->name('candidaturas.show');
 
 //Notificaciones (Le ponemos el middleware creado rol.reclutador porque las notificaciones solo pueden ser visibles por los recruiters)
 Route::get('/notificaciones', [NotificacionController::class, '__invoke'])->middleware(['auth', 'verified', 'rol.reclutador'])->name('notificaciones');
