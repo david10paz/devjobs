@@ -29,5 +29,6 @@ Route::get('/mis-candidaturas/{user}', [CandidatosController::class, 'show'])->m
 
 //Notificaciones (Le ponemos el middleware creado rol.reclutador porque las notificaciones solo pueden ser visibles por los recruiters)
 Route::get('/notificaciones', [NotificacionController::class, '__invoke'])->middleware(['auth', 'verified', 'rol.reclutador'])->name('notificaciones');
+Route::post('/notificacion/{notificacion}', [NotificacionController::class, 'destroy'])->middleware(['auth', 'verified', 'rol.reclutador'])->name('notificacion.destroy');
 
 require __DIR__.'/auth.php';

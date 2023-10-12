@@ -18,4 +18,10 @@ class NotificacionController extends Controller
 
         return view('notificaciones.index', ['notificaciones' => $notificaciones]);
     }
+    
+    public function destroy(Request $request)
+    {
+        auth()->user()->unreadNotifications->where('id', $request->notificacion)->markAsRead();
+        return back();
+    }
 }
